@@ -4,12 +4,12 @@ var app = express();
 
 // Rewrite rule for angular
 // app.use('/', express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/dist'));
+app.use(express.static(__dirname + '/dist/angular7-heroku'));
 app.get('/assets', function(req, res){
-    res.sendFile(__dirname + '/dist/assets');
+    res.sendFile(__dirname + '/dist/angular7-heroku/assets');
 });
 app.get('/*', function(req, res){
-    res.sendFile(__dirname + '/dist/index.html');
+    res.sendFile(__dirname + `/dist/angular7-heroku/index.html`);
 });
 
 var port = process.env.PORT || 80;
