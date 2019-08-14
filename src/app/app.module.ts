@@ -7,7 +7,6 @@ import { AppService } from './app.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'; 
 import { routing } from './app.routes';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
