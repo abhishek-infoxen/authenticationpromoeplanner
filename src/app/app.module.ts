@@ -5,15 +5,18 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppService } from './app.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; 
 import { routing } from './app.routes';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthInterceptor } from './auth.interceptor';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HttpClientModule,
     routing
   ],
-  providers: [AppService],
+  providers: [ 
+            AppService,
+            {
+              provide: HTTP_INTERCEPTORS,
+              useClass: AuthInterceptor,
+              multi: true
+            }
+          ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

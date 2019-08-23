@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
     loading = false;
     submitted = false;
     returnUrl: string;
+    errorMsg: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -48,11 +49,26 @@ export class LoginComponent implements OnInit {
         }
 console.log("login", this.loginForm.value);
         this.loading = true;
-        this.appService.loginRequest(this.loginForm.value).subscribe((res: any)=>{
-            console.log("res", res);
+        let loginData = {
+            UserID: this.loginForm.value.username,
+            Password: this.loginForm.value.password
+        }
+        this.appService.loginRequest(loginData).subscribe((res: any)=>{
+            if(res.status == 200){
+                localStorage.setItem('user', res.data);
+                this.router.navigate(['/dashboard']);
+            } else {
+                this.loading = false;
+                localStorage.removeItem('user');
+                this.errorMsg = res.message;
+            }
+        }, err=>{
+            this.loading =  false;
+            localStorage.removeItem('user');
+            console.log("error");
         })
 
-        this.router.navigate(['/dashboard']);
+       
     //     this.authenticationService.login(this.f.username.value, this.f.password.value)
     //         .pipe(first())
     //         .subscribe(

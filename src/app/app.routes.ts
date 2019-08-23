@@ -4,11 +4,13 @@ import { Routes, RouterModule } from "@angular/router";
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthGuard } from './auth.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 const APP_ROUTER: Routes = [
     { path: '', component: LoginComponent},
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+    { path: '**', component: PageNotFoundComponent }
     // { path: 'sign-in', component: LoginComponent, canActivate: [AccessAuthGuard]},
 	// { path: 'dashboard', loadChildren: 'app/dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuard]},
 	// //{ path: 'config', loadChildren: 'app/config/config.module#ConfigModule', canActivate: []},
