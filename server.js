@@ -4,7 +4,7 @@ var app = express();
 
 // Rewrite rule for angular
 // app.use('/', express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/dist/angular7-heroku'));
+app.use(express.static(__dirname + '/dist'));
 app.get('/assets', function(req, res){
     res.sendFile(__dirname + '/dist/assets');
 });
