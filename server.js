@@ -6,10 +6,10 @@ var app = express();
 // app.use('/', express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/dist/angular7-heroku'));
 app.get('/assets', function(req, res){
-    res.sendFile(__dirname + '/dist/angular7-heroku/assets');
+    res.sendFile(__dirname + '/dist/assets');
 });
 app.get('/*', function(req, res){
-    res.sendFile(__dirname + `/dist/angular7-heroku/index.html`);
+    res.sendFile(__dirname + `/dist/index.html`);
 });
 
 var port = process.env.PORT || 80;
