@@ -9,7 +9,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const APP_ROUTER: Routes = [
     { path: '', component: LoginComponent},
-    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+    { path: 'dashboard', component: DashboardComponent, canActivate: []},
     { path: '**', component: PageNotFoundComponent }
     // { path: 'sign-in', component: LoginComponent, canActivate: [AccessAuthGuard]},
 	// { path: 'dashboard', loadChildren: 'app/dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuard]},

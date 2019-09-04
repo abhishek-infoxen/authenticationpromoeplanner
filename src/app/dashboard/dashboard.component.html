@@ -1,5 +1,8 @@
+<app-loader *ngIf="loading"></app-loader>
 <div style="float: right">
   <button class="btn btn-primary" (click)="logout()">Logout</button>
 </div>
 <h4>Welcome user: <b>{{user}}</b></h4>
+<h5>{{authData}}</h5>
+<h4 style="color: red">{{errorMsg}}</h4>
 

@@ -1,8 +1,9 @@
 
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AppService } from '../app.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -19,13 +20,9 @@ export class LoginComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private router: Router,
-        private appService: AppService
-    ) {
-        // // redirect to home if already logged in
-        // if (this.authenticationService.currentUserValue) { 
-        //     this.router.navigate(['/']);
-        // }
-    }
+        private appService: AppService,
+        private cookieService: CookieService
+    ) { }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
@@ -47,41 +44,46 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
-console.log("login", this.loginForm.value);
+        console.log("login", this.loginForm.value);
         this.loading = true;
         let loginData = {
             UserID: this.loginForm.value.username,
             Password: this.loginForm.value.password
         }
         this.appService.loginRequest(loginData).subscribe((res: any)=>{
+            this.loading = false;
             if(res.status == 200){
-                localStorage.setItem('user', res.data);
                 this.router.navigate(['/dashboard']);
+               // this.fetchUserData();
+               
             } else {
-                this.loading = false;
-                localStorage.removeItem('user');
+               
                 this.errorMsg = res.message;
             }
         }, err=>{
             this.loading =  false;
-            localStorage.removeItem('user');
+            
             console.log("error");
         })
 
+
+}
+
+fetchUserData(){
+    this.loading = true;
+    this.appService.getAuthenticatedUser().subscribe((res: any)=>{
+        this.loading = false;
+        if(res.status == 200){
+           
+            this.appService.authData = res.message;
+        } else {
+            this.errorMsg = 'User not Authenticated';
+        }
        
-    //     this.authenticationService.login(this.f.username.value, this.f.password.value)
-    //         .pipe(first())
-    //         .subscribe(
-    //             data => {
-    //                 this.router.navigate([this.returnUrl]);
-    //             },
-    //             error => {
-    //                 this.alertService.error(error);
-    //                 this.loading = false;
-    //             });
-    // }
-
-
+    }, err=>{
+        this.loading = false;
+        this.errorMsg = 'User not Authenticated';
+    })
 }
 }
 

@@ -10,13 +10,16 @@ import { routing } from './app.routes';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthInterceptor } from './auth.interceptor';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CookieService } from 'ngx-cookie-service';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
               provide: HTTP_INTERCEPTORS,
               useClass: AuthInterceptor,
               multi: true
-            }
+            },
+            CookieService
           ],
   bootstrap: [AppComponent]
 })
